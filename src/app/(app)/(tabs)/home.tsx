@@ -52,7 +52,6 @@ export default function HomeTab() {
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Featured picks</Text>
-          <Text style={styles.sectionMeta}>Tap any card to open the full menu</Text>
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.featuredRow}>

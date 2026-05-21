@@ -50,6 +50,12 @@ export default function ProfileTab() {
           <Text style={styles.footerTitle}>Need help?</Text>
           <Text style={styles.footerBody}>Use the drawer menu to jump to help, settings, and your order history.</Text>
           <PrimaryButton title="Open Help" onPress={() => router.push("/(app)/(drawer)/help")} style={{ marginTop: 14 }} />
+          <PrimaryButton
+            title="Back to Home"
+            onPress={() => router.replace("/(app)/(tabs)/home")}
+            variant="secondary"
+            style={{ marginTop: 12 }}
+          />
         </View>
       </ScrollView>
     </Screen>
