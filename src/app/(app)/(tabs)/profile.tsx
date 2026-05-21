@@ -3,14 +3,14 @@ import { Screen } from "@/components/Screen";
 import { Colors } from "@/theme/colors";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View , ScrollView} from "react-native";
 
 export default function ProfileTab() {
   const router = useRouter();
 
   return (
     <Screen>
-      <View style={styles.wrap}>
+      <ScrollView style={styles.wrap}>
         <View style={styles.hero}>
           <Text style={styles.title}>Profile</Text>
           <Text style={styles.meta}>Open the drawer for settings, help, and sign out.</Text>
@@ -46,8 +46,12 @@ export default function ProfileTab() {
           </Pressable>
         </View>
 
-        <PrimaryButton title="Open Drawer" onPress={() => router.push("/(app)/(drawer)/help")} style={{ marginTop: 18 }} />
-      </View>
+        <View style={styles.footerCard}>
+          <Text style={styles.footerTitle}>Need help?</Text>
+          <Text style={styles.footerBody}>Use the drawer menu to jump to help, settings, and your order history.</Text>
+          <PrimaryButton title="Open Help" onPress={() => router.push("/(app)/(drawer)/help")} style={{ marginTop: 14 }} />
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
@@ -89,4 +93,15 @@ const styles = StyleSheet.create({
   },
   linkTitle: { color: Colors.text, fontWeight: "900" },
   linkMeta: { color: Colors.muted, marginTop: 6, lineHeight: 18, fontSize: 12 },
+  footerCard: {
+    marginTop: 18,
+    padding: 18,
+    borderRadius: 22,
+    backgroundColor: Colors.card,
+    borderWidth: 1,
+    marginBottom: 18,
+    borderColor: Colors.line,
+  },
+  footerTitle: { color: Colors.text, fontWeight: "900", fontSize: 16 },
+  footerBody: { color: Colors.muted, marginTop: 8, lineHeight: 20 },
 });

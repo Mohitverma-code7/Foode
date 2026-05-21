@@ -3,6 +3,7 @@ export type Restaurant = {
   name: string;
   price: number;
   cuisine: string;
+  image: string;
   rating: number;
   eta: string;
   deliveryFee: number;
@@ -18,6 +19,7 @@ export const restaurants: Restaurant[] = [
     name: "Fire & Lime Tacos",
     price: 12.5,
     cuisine: "Mexican",
+    image: "https://images.unsplash.com/photo-1541618530-bd0a83a67f76?fm=jpg&ixlib=rb-4.0.3&q=60&w=3000",
     rating: 4.8,
     eta: "18-24 min",
     deliveryFee: 1.99,
@@ -31,6 +33,7 @@ export const restaurants: Restaurant[] = [
     name: "Sushi Orbit",
     price: 19.99,
     cuisine: "Japanese",
+    image: "https://images.unsplash.com/photo-1562436260-126d541901e0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=60&w=3000",
     rating: 4.9,
     eta: "22-30 min",
     deliveryFee: 2.49,
@@ -44,6 +47,7 @@ export const restaurants: Restaurant[] = [
     name: "Green Bowl",
     price: 10.75,
     cuisine: "Healthy",
+    image: "https://images.unsplash.com/photo-1592171029478-6e98b23f3f03?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=60&w=3000",
     rating: 4.7,
     eta: "12-18 min",
     deliveryFee: 0.99,
@@ -56,6 +60,7 @@ export const restaurants: Restaurant[] = [
     name: "Pasta Avenue",
     price: 15.25,
     cuisine: "Italian",
+    image: "https://images.unsplash.com/photo-1575980967953-d812d957dca5?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=60&w=3000",
     rating: 4.6,
     eta: "20-28 min",
     deliveryFee: 1.49,
@@ -68,6 +73,7 @@ export const restaurants: Restaurant[] = [
     name: "Burger District",
     price: 13.4,
     cuisine: "American",
+    image: "https://images.unsplash.com/photo-1541618530-bd0a83a67f76?fm=jpg&ixlib=rb-4.0.3&q=60&w=3000",
     rating: 4.5,
     eta: "16-22 min",
     deliveryFee: 1.79,
@@ -80,6 +86,7 @@ export const restaurants: Restaurant[] = [
     name: "Curry House",
     price: 14.2,
     cuisine: "Indian",
+    image: "https://images.unsplash.com/photo-1757445059337-23e485483425?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=60&w=3000",
     rating: 4.8,
     eta: "24-32 min",
     deliveryFee: 2.19,

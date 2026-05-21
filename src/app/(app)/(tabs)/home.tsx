@@ -4,7 +4,7 @@ import { cuisineFilters, restaurants } from "@/data/restaurants";
 import { Colors } from "@/theme/colors";
 import { useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function HomeTab() {
   const router = useRouter();
@@ -67,12 +67,15 @@ export default function HomeTab() {
               }
               style={styles.featuredCard}
             >
-              <Text style={styles.featuredTag}>{item.cuisine}</Text>
-              <Text style={styles.featuredName}>{item.name}</Text>
-              <Text style={styles.featuredBody}>{item.description}</Text>
-              <Text style={styles.featuredMeta}>
-                {item.rating.toFixed(1)} ★  {item.eta}
-              </Text>
+              <Image source={{ uri: item.image }} style={styles.featuredImage} />
+              <View style={styles.featuredCopy}>
+                <Text style={styles.featuredTag}>{item.cuisine}</Text>
+                <Text style={styles.featuredName}>{item.name}</Text>
+                <Text style={styles.featuredBody}>{item.description}</Text>
+                <Text style={styles.featuredMeta}>
+                  {item.rating.toFixed(1)} ★  {item.eta}
+                </Text>
+              </View>
             </Pressable>
           ))}
         </ScrollView>
@@ -84,11 +87,12 @@ export default function HomeTab() {
 
         <View style={styles.list}>
           {visibleRestaurants.map((item) => (
-            <RestaurantCard
+              <RestaurantCard
               key={item.id}
               name={item.name}
               price={item.price}
               cuisine={item.cuisine}
+              image={item.image}
               rating={item.rating}
               eta={item.eta}
               deliveryFee={item.deliveryFee}
@@ -167,12 +171,20 @@ const styles = StyleSheet.create({
   featuredRow: { gap: 12, paddingBottom: 10 },
   list: { paddingTop: 14, paddingBottom: 16 },
   featuredCard: {
-    width: 220,
-    borderRadius: 24,
-    padding: 16,
+    width: 240,
+    borderRadius: 28,
     backgroundColor: Colors.card,
     borderWidth: 1,
     borderColor: Colors.line,
+    overflow: "hidden",
+  },
+  featuredImage: {
+    width: "100%",
+    height: 150,
+    backgroundColor: Colors.cardStrong,
+  },
+  featuredCopy: {
+    padding: 16,
   },
   featuredTag: {
     color: Colors.brand,

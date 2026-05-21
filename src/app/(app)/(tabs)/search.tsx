@@ -24,19 +24,40 @@ export default function SearchTab() {
     });
   }, [cuisine, query]);
 
+  const featuredCount = restaurants.filter((item) => item.featured).length;
+
   return (
     <Screen>
-      <View style={styles.wrap}>
-        <Text style={styles.title}>Search</Text>
-        <Text style={styles.meta}>Search by restaurant, cuisine, or what you are craving.</Text>
+      <ScrollView contentContainerStyle={styles.wrap} showsVerticalScrollIndicator={false}>
+        <View style={styles.hero}>
+          <View style={styles.heroText}>
+            <Text style={styles.kicker}>Search food</Text>
+            <Text style={styles.title}>What are you craving?</Text>
+            <Text style={styles.meta}>Search by restaurant, cuisine, or the vibe you want tonight.</Text>
+          </View>
 
-        <TextInput
-          value={query}
-          onChangeText={setQuery}
-          placeholder="Try sushi, spicy, vegan..."
-          placeholderTextColor="#8A7164"
-          style={styles.input}
-        />
+          <View style={styles.heroStats}>
+            <View style={styles.statCard}>
+              <Text style={styles.statValue}>{results.length}</Text>
+              <Text style={styles.statLabel}>matches</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statValue}>{featuredCount}</Text>
+              <Text style={styles.statLabel}>featured</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.searchBox}>
+          <Text style={styles.searchIcon}>⌕</Text>
+          <TextInput
+            value={query}
+            onChangeText={setQuery}
+            placeholder="Try sushi, spicy, vegan..."
+            placeholderTextColor="#8A7164"
+            style={styles.input}
+          />
+        </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
           {cuisineFilters.map((item) => (
@@ -51,13 +72,14 @@ export default function SearchTab() {
           <Text style={styles.resultMeta}>{results.length} matches</Text>
         </View>
 
-        <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+        <View style={styles.list}>
           {results.map((item) => (
             <RestaurantCard
               key={item.id}
               name={item.name}
               price={item.price}
               cuisine={item.cuisine}
+              image={item.image}
               rating={item.rating}
               eta={item.eta}
               deliveryFee={item.deliveryFee}
@@ -72,47 +94,97 @@ export default function SearchTab() {
               }
             />
           ))}
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { paddingHorizontal: 18, paddingTop: 8, flex: 1 },
-  title: { color: Colors.text, fontSize: 26, fontWeight: "900" },
-  meta: { color: Colors.muted, marginTop: 8, lineHeight: 18 },
-  input: {
-    marginTop: 16,
-    height: 50,
-    borderRadius: 16,
-    paddingHorizontal: 14,
-    color: Colors.text,
+  wrap: { paddingHorizontal: 18, paddingTop: 8, paddingBottom: 24 },
+  hero: {
+    borderRadius: 32,
+    padding: 18,
+    backgroundColor: Colors.cardStrong,
+    borderWidth: 1,
+    borderColor: Colors.line,
+    overflow: "hidden",
+  },
+  heroText: { gap: 8 },
+  kicker: {
+    color: Colors.brand,
+    fontSize: 12,
+    fontWeight: "900",
+    textTransform: "uppercase",
+    letterSpacing: 1.3,
+  },
+  title: { color: Colors.text, fontSize: 30, fontWeight: "900", lineHeight: 34 },
+  meta: { color: Colors.muted, lineHeight: 20 },
+  heroStats: { flexDirection: "row", gap: 12, marginTop: 16 },
+  statCard: {
+    flex: 1,
+    borderRadius: 18,
+    padding: 14,
     backgroundColor: Colors.card,
     borderWidth: 1,
     borderColor: Colors.line,
   },
-  chips: { gap: 10, paddingVertical: 14 },
-  chip: {
+  statValue: { color: Colors.text, fontSize: 20, fontWeight: "900" },
+  statLabel: { color: Colors.muted, marginTop: 4, fontSize: 12 },
+  searchBox: {
+    marginTop: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderRadius: 18,
     paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 999,
     backgroundColor: Colors.card,
     borderWidth: 1,
     borderColor: Colors.line,
+    minHeight: 56,
+    shadowColor: "#D88952",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 2,
+  },
+  searchIcon: {
+    color: Colors.brand,
+    fontSize: 20,
+    fontWeight: "900",
+  },
+  input: {
+    flex: 1,
+    color: Colors.text,
+    fontSize: 15,
+    paddingVertical: 0,
+  },
+  chips: { gap: 10, paddingVertical: 16 },
+  chip: {
+    minHeight: 46,
+    minWidth: 94,
+    paddingHorizontal: 16,
+    borderRadius: 16,
+    backgroundColor: Colors.card,
+    borderWidth: 1,
+    borderColor: Colors.line,
+    alignItems: "center",
+    justifyContent: "center",
   },
   chipActive: {
-    backgroundColor: "rgba(255,106,43,0.12)",
-    borderColor: "rgba(255,106,43,0.24)",
+    backgroundColor: "rgba(255,106,43,0.14)",
+    borderColor: "rgba(255,106,43,0.26)",
   },
-  chipText: { color: Colors.muted, fontWeight: "800" },
+  chipText: { color: Colors.muted, fontWeight: "800", textAlign: "center" },
   chipTextActive: { color: Colors.text },
   resultHeader: {
-    marginTop: 4,
+    marginTop: 6,
     marginBottom: 10,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   resultTitle: { color: Colors.text, fontSize: 18, fontWeight: "900" },
   resultMeta: { color: Colors.muted },
+  list: { paddingBottom: 8 },
 });

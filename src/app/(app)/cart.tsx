@@ -72,6 +72,13 @@ export default function CartScreen() {
           style={{ marginTop: 18 }}
         />
 
+        <PrimaryButton
+          title="Back to Home"
+          onPress={() => router.replace("/(app)/(tabs)/home")}
+          variant="secondary"
+          style={{ marginTop: 12 }}
+        />
+
         <Text style={styles.tip}>Mock cart state persists across reloads.</Text>
       </View>
     </Screen>

@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     color: Colors.text,
     fontSize: 15,
+    marginBottom: 12,
   },
   dividerRow: {
     flexDirection: "row",

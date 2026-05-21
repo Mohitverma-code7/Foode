@@ -5,7 +5,7 @@ import { addToCart } from "@/state/cartStore";
 import { Colors } from "@/theme/colors";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function RestaurantDetailScreen() {
   const router = useRouter();
@@ -19,6 +19,7 @@ export default function RestaurantDetailScreen() {
       name: String(params.name ?? "Unknown"),
       price: Number(params.price ?? 10),
       cuisine: "Custom",
+      image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=60&w=3000",
       rating: 4.6,
       eta: "20 min",
       deliveryFee: 1.99,
@@ -39,7 +40,11 @@ export default function RestaurantDetailScreen() {
 
   return (
     <Screen>
-      <View style={styles.wrap}>
+      <ScrollView contentContainerStyle={styles.wrap} showsVerticalScrollIndicator={false}>
+        <View style={styles.heroImageWrap}>
+          <Image source={{ uri: restaurant.image }} style={styles.heroImage} />
+          <View style={styles.heroShade} />
+        </View>
         <View style={styles.hero}>
           <Text style={styles.tag}>{restaurant.cuisine}</Text>
           <Text style={styles.title}>{restaurant.name}</Text>
@@ -90,13 +95,27 @@ export default function RestaurantDetailScreen() {
         <Pressable onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>Back</Text>
         </Pressable>
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { paddingHorizontal: 18, paddingTop: 8 },
+  wrap: { paddingHorizontal: 18, paddingTop: 8, paddingBottom: 24 },
+  heroImageWrap: {
+    height: 220,
+    borderRadius: 32,
+    overflow: "hidden",
+    marginBottom: 16,
+  },
+  heroImage: {
+    width: "100%",
+    height: "100%",
+  },
+  heroShade: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(31,24,19,0.12)",
+  },
   hero: {
     borderRadius: 32,
     padding: 18,
