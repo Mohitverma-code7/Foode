@@ -1,4 +1,6 @@
 import { loadAuthUser } from "@/state/authStore";
+import { AppDrawer } from "@/components/AppDrawer";
+import { DrawerProvider } from "@/state/drawerStore";
 import { Colors } from "@/theme/colors";
 import { Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -32,7 +34,14 @@ export default function AppRootLayout() {
     );
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <DrawerProvider>
+      <View style={{ flex: 1 }}>
+        <Stack screenOptions={{ headerShown: false }} />
+        <AppDrawer />
+      </View>
+    </DrawerProvider>
+  );
 }
 
 

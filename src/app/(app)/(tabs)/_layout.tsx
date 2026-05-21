@@ -4,7 +4,6 @@ import { Colors } from "@/theme/colors";
 import { Tabs } from "expo-router";
 import React from "react";
 
-// Use bundled icon assets via require to avoid TS module resolution issues.
 const homeIcon = require("../../../../assets/images/tabIcons/home.png");
 const exploreIcon = require("../../../../assets/images/tabIcons/explore.png");
 const profileIcon = require("../../../../assets/images/tabIcons/home.png");
@@ -17,11 +16,27 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#0D1831",
-          borderTopColor: "rgba(255,255,255,0.08)",
+          backgroundColor: "#FFF8F2",
+          borderTopColor: Colors.line,
+          borderTopWidth: 1,
+          height: 72,
+          paddingBottom: 12,
+          paddingTop: 8,
+          shadowColor: "#D88952",
+          shadowOpacity: 0.12,
+          shadowRadius: 18,
+          shadowOffset: { width: 0, height: -4 },
+          elevation: 8,
         },
-        tabBarActiveTintColor: Colors.text,
-        tabBarInactiveTintColor: "rgba(255,255,255,0.55)",
+        tabBarActiveTintColor: Colors.brand,
+        tabBarInactiveTintColor: "rgba(31,24,19,0.55)",
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "700",
+        },
+        tabBarItemStyle: {
+          paddingTop: 4,
+        },
       }}
     >
       <Tabs.Screen
@@ -42,13 +57,11 @@ export default function TabsLayout() {
         name="orders"
         options={{
           title: "Orders",
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={exploreIcon} />
-          ),
+          tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={exploreIcon} />,
           tabBarBadge: cartCount > 0 ? String(cartCount) : undefined,
           tabBarBadgeStyle: {
             backgroundColor: Colors.brand,
-            color: Colors.text,
+            color: "#FFF7F1",
             borderRadius: 12,
           },
         }}
@@ -63,4 +76,3 @@ export default function TabsLayout() {
     </Tabs>
   );
 }
-

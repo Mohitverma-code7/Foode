@@ -16,16 +16,16 @@ export function AppHeader(props: { title: string; backLabel?: string }) {
 const styles = StyleSheet.create({
   wrap: {
     alignItems: "center",
-    gap: 2,
+    gap: 4,
+    paddingVertical: 6,
   },
   title: {
     color: Colors.text,
     fontWeight: "900",
-    fontSize: 16,
+    fontSize: 17,
   },
   back: {
     color: Colors.muted,
     fontSize: 12,
   },
 });
-

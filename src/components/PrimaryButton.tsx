@@ -11,9 +11,9 @@ export function PrimaryButton(props: {
 }) {
   const variant = props.variant ?? "primary";
 
-  const bg = variant === "primary" ? Colors.brand : "transparent";
-  const borderColor = variant === "primary" ? Colors.brand : "rgba(255,255,255,0.28)";
-  const textColor = variant === "primary" ? "white" : Colors.text;
+  const bg = variant === "primary" ? Colors.brand : "#FFF";
+  const borderColor = variant === "primary" ? Colors.brand : Colors.line;
+  const textColor = variant === "primary" ? "#FFF7F1" : Colors.text;
 
   return (
     <Pressable
@@ -37,16 +37,21 @@ export function PrimaryButton(props: {
 
 const styles = StyleSheet.create({
   base: {
-    height: 48,
-    borderRadius: 14,
+    height: 52,
+    borderRadius: 18,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 16,
+    shadowColor: "#C86B37",
+    shadowOpacity: 0.18,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 4,
   },
   text: {
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "800",
+    letterSpacing: 0.2,
   },
 });
-

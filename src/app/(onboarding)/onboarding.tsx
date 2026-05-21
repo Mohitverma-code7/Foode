@@ -9,33 +9,35 @@ export default function OnboardingScreen() {
   const router = useRouter();
 
   return (
-    <Screen>
+    <Screen showChrome={false}>
       <View style={styles.wrap}>
-        <Text style={styles.headline}>Fast food. Fresh vibes.</Text>
-        <Text style={styles.body}>
-          Discover restaurants, add items to cart, and track orders — all in a smooth experience.
-        </Text>
+        <View style={styles.hero}>
+          <Text style={styles.heroTag}>WELCOME TO FOOD APP</Text>
+          <Text style={styles.heroTitle}>From craving to checkout in seconds.</Text>
+          <Text style={styles.heroBody}>
+            Discover restaurants, save favorites, and follow every order with a bright, easy flow.
+          </Text>
+        </View>
 
-        <View style={styles.steps}>
-          <View style={styles.step}>
-            <Text style={styles.stepNum}>1</Text>
-            <Text style={styles.stepText}>Pick a restaurant</Text>
+        <View style={styles.cards}>
+          <View style={styles.stepCard}>
+            <Text style={styles.stepNumber}>01</Text>
+            <Text style={styles.stepTitle}>Browse vibrant menus</Text>
+            <Text style={styles.stepBody}>Featured dishes, fast filters, and bold visuals.</Text>
           </View>
-          <View style={styles.step}>
-            <Text style={styles.stepNum}>2</Text>
-            <Text style={styles.stepText}>Customize your order</Text>
-          </View>
-          <View style={styles.step}>
-            <Text style={styles.stepNum}>3</Text>
-            <Text style={styles.stepText}>Checkout and relax</Text>
+          <View style={styles.stepCard}>
+            <Text style={styles.stepNumber}>02</Text>
+            <Text style={styles.stepTitle}>Order in a tap</Text>
+            <Text style={styles.stepBody}>Add to cart, track status, and check out smoothly.</Text>
           </View>
         </View>
 
-        <View style={{ marginTop: 22 }}>
+        <View style={styles.actions}>
           <PrimaryButton title="Get Started" onPress={() => router.replace("/(app)/(tabs)/home")} />
+          <PrimaryButton title="Sign In" onPress={() => router.replace("/(auth)/login")} variant="secondary" style={{ marginTop: 12 }} />
         </View>
 
-        <Text style={styles.note}>You can access the drawer from Profile.</Text>
+        <Text style={styles.note}>You can access the drawer from the main app screens.</Text>
       </View>
     </Screen>
   );
@@ -43,52 +45,77 @@ export default function OnboardingScreen() {
 
 const styles = StyleSheet.create({
   wrap: {
+    flex: 1,
     paddingHorizontal: 18,
-    paddingTop: 30,
+    paddingTop: 14,
+    paddingBottom: 18,
   },
-  headline: {
-    color: Colors.text,
-    fontSize: 28,
+  hero: {
+    minHeight: 210,
+    borderRadius: 32,
+    padding: 20,
+    justifyContent: "flex-end",
+    backgroundColor: Colors.brand2,
+    shadowColor: Colors.brand2,
+    shadowOpacity: 0.16,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 12 },
+    elevation: 4,
+  },
+  heroTag: {
+    color: "#FFF7F1",
     fontWeight: "900",
-    lineHeight: 34,
+    letterSpacing: 1.4,
+    fontSize: 12,
+    marginBottom: 12,
   },
-  body: {
+  heroTitle: {
+    color: "#FFF7F1",
+    fontSize: 31,
+    lineHeight: 35,
+    fontWeight: "900",
+    maxWidth: 320,
+  },
+  heroBody: {
     marginTop: 10,
-    color: Colors.muted,
-    lineHeight: 20,
+    color: "#FFF4EA",
+    lineHeight: 21,
+    maxWidth: 340,
   },
-  steps: {
-    marginTop: 28,
+  cards: {
+    marginTop: 16,
     gap: 12,
   },
-  step: {
+  stepCard: {
+    padding: 18,
+    borderRadius: 24,
     backgroundColor: Colors.card,
-    borderRadius: 16,
-    padding: 16,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.07)",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
+    borderColor: Colors.line,
   },
-  stepNum: {
-    width: 34,
-    height: 34,
-    borderRadius: 12,
-    backgroundColor: "rgba(32,138,239,0.18)",
+  stepNumber: {
     color: Colors.brand,
     fontWeight: "900",
-    textAlign: "center",
-    paddingTop: 7,
-  },
-  stepText: {
-    color: Colors.text,
-    fontWeight: "800",
-  },
-  note: {
-    marginTop: 20,
-    color: "rgba(255,255,255,0.6)",
+    letterSpacing: 1.5,
     fontSize: 12,
   },
+  stepTitle: {
+    marginTop: 10,
+    color: Colors.text,
+    fontSize: 17,
+    fontWeight: "900",
+  },
+  stepBody: {
+    marginTop: 6,
+    color: Colors.muted,
+    lineHeight: 19,
+  },
+  actions: {
+    marginTop: 16,
+  },
+  note: {
+    marginTop: 18,
+    color: Colors.muted,
+    textAlign: "center",
+  },
 });
-
