@@ -1,8 +1,11 @@
-import { Colors } from "@/theme/colors";
-import React from "react";
+import { useTheme } from "@/state/themeStore";
+import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export function AppHeader(props: { title: string; backLabel?: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={styles.wrap}>
       <Text style={styles.title} numberOfLines={1}>
@@ -13,19 +16,21 @@ export function AppHeader(props: { title: string; backLabel?: string }) {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: {
-    alignItems: "center",
-    gap: 4,
-    paddingVertical: 6,
-  },
-  title: {
-    color: Colors.text,
-    fontWeight: "900",
-    fontSize: 17,
-  },
-  back: {
-    color: Colors.muted,
-    fontSize: 12,
-  },
-});
+function createStyles(colors: ReturnType<typeof useTheme>["colors"]) {
+  return StyleSheet.create({
+    wrap: {
+      alignItems: "center",
+      gap: 4,
+      paddingVertical: 6,
+    },
+    title: {
+      color: colors.text,
+      fontWeight: "900",
+      fontSize: 17,
+    },
+    back: {
+      color: colors.muted,
+      fontSize: 12,
+    },
+  });
+}

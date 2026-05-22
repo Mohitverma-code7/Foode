@@ -1,11 +1,12 @@
 import { loadAuthUser } from "@/state/authStore";
-import { Colors } from "@/theme/colors";
+import { useTheme } from "@/state/themeStore";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+  const { colors } = useTheme();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -27,12 +28,11 @@ export default function Index() {
 
   if (!ready) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: Colors.bg }}>
-        <ActivityIndicator color={Colors.brand} />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.bg }}>
+        <ActivityIndicator color={colors.brand} />
       </View>
     );
   }
 
   return null;
 }
-

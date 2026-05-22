@@ -2,7 +2,7 @@ import { PrimaryButton } from "@/components/PrimaryButton";
 import { Screen } from "@/components/Screen";
 import { useCartCount } from "@/hooks/useCartCount";
 import { clearCart, getCartItems, loadCartItems } from "@/state/cartStore";
-import { Colors } from "@/theme/colors";
+import { useTheme } from "@/state/themeStore";
 import { useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -10,6 +10,8 @@ import { StyleSheet, Text, View } from "react-native";
 export default function CartScreen() {
   const router = useRouter();
   const cartCount = useCartCount();
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [items, setItems] = useState(getCartItems());
 
   useEffect(() => {
@@ -65,49 +67,39 @@ export default function CartScreen() {
           </View>
         )}
 
-        <PrimaryButton
-          title={items.length === 0 ? "Add from Home" : `Checkout (${cartCount} items)`}
-          onPress={() => (items.length === 0 ? router.replace("/(app)/(tabs)/home") : onCheckout())}
-          disabled={false}
-          style={{ marginTop: 18 }}
-        />
-
-        <PrimaryButton
-          title="Back to Home"
-          onPress={() => router.replace("/(app)/(tabs)/home")}
-          variant="secondary"
-          style={{ marginTop: 12 }}
-        />
-
+        <PrimaryButton title={items.length === 0 ? "Add from Home" : `Checkout (${cartCount} items)`} onPress={() => (items.length === 0 ? router.replace("/(app)/(tabs)/home") : onCheckout())} disabled={false} style={{ marginTop: 18 }} />
+        <PrimaryButton title="Back to Home" onPress={() => router.replace("/(app)/(tabs)/home")} variant="secondary" style={{ marginTop: 12 }} />
         <Text style={styles.tip}>Mock cart state persists across reloads.</Text>
       </View>
     </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { paddingHorizontal: 18, paddingTop: 8 },
-  title: { color: Colors.text, fontSize: 26, fontWeight: "900" },
-  subtitle: { color: Colors.muted, marginTop: 6, lineHeight: 18 },
-  empty: { color: Colors.muted, marginTop: 12, lineHeight: 20 },
-  panel: {
-    marginTop: 16,
-    backgroundColor: Colors.card,
-    borderRadius: 20,
-    padding: 18,
-    borderWidth: 1,
-    borderColor: Colors.line,
-  },
-  row: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: Colors.line },
-  name: { color: Colors.text, fontWeight: "900" },
-  meta: { color: Colors.muted, marginTop: 4 },
-  price: { color: Colors.text, fontWeight: "900" },
-  fees: { marginTop: 6, gap: 10 },
-  feeRow: { flexDirection: "row", justifyContent: "space-between" },
-  feeLabel: { color: Colors.muted },
-  feeValue: { color: Colors.text, fontWeight: "800" },
-  totalRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 12, paddingTop: 10, borderTopWidth: 1, borderTopColor: Colors.line },
-  totalLabel: { color: Colors.muted, fontWeight: "800" },
-  totalValue: { color: Colors.brand, fontWeight: "900", fontSize: 16 },
-  tip: { marginTop: 14, color: Colors.muted, fontSize: 12 },
-});
+function createStyles(colors: ReturnType<typeof useTheme>["colors"]) {
+  return StyleSheet.create({
+    wrap: { paddingHorizontal: 18, paddingTop: 8 },
+    title: { color: colors.text, fontSize: 26, fontWeight: "900" },
+    subtitle: { color: colors.muted, marginTop: 6, lineHeight: 18 },
+    empty: { color: colors.muted, marginTop: 12, lineHeight: 20 },
+    panel: {
+      marginTop: 16,
+      backgroundColor: colors.card,
+      borderRadius: 20,
+      padding: 18,
+      borderWidth: 1,
+      borderColor: colors.line,
+    },
+    row: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.line },
+    name: { color: colors.text, fontWeight: "900" },
+    meta: { color: colors.muted, marginTop: 4 },
+    price: { color: colors.text, fontWeight: "900" },
+    fees: { marginTop: 6, gap: 10 },
+    feeRow: { flexDirection: "row", justifyContent: "space-between" },
+    feeLabel: { color: colors.muted },
+    feeValue: { color: colors.text, fontWeight: "800" },
+    totalRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 12, paddingTop: 10, borderTopWidth: 1, borderTopColor: colors.line },
+    totalLabel: { color: colors.muted, fontWeight: "800" },
+    totalValue: { color: colors.brand, fontWeight: "900", fontSize: 16 },
+    tip: { marginTop: 14, color: colors.muted, fontSize: 12 },
+  });
+}

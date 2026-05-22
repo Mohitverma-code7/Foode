@@ -1,9 +1,10 @@
-import { Colors } from "@/theme/colors";
 import { useCartCount } from "@/hooks/useCartCount";
 import { useDrawer } from "@/state/drawerStore";
+import { useTheme } from "@/state/themeStore";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function Screen(props: { children: React.ReactNode; style?: ViewStyle; showChrome?: boolean }) {
@@ -11,7 +12,9 @@ export function Screen(props: { children: React.ReactNode; style?: ViewStyle; sh
   const drawer = useDrawer();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { colors, mode, toggleMode } = useTheme();
   const showChrome = props.showChrome ?? true;
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -21,7 +24,7 @@ export function Screen(props: { children: React.ReactNode; style?: ViewStyle; sh
         {showChrome ? (
           <View style={styles.topBar}>
             <Pressable onPress={drawer.openDrawer} style={styles.iconButton} accessibilityLabel="Open menu">
-              <Text style={styles.iconText}>≡</Text>
+              <MaterialCommunityIcons name="menu" size={22} color={colors.text} />
             </Pressable>
 
             <View style={styles.brandWrap}>
@@ -37,6 +40,16 @@ export function Screen(props: { children: React.ReactNode; style?: ViewStyle; sh
                 </View>
               ) : null}
             </Pressable>
+
+            <Pressable
+              onPress={() => {
+                void toggleMode();
+              }}
+              style={styles.themeButton}
+              accessibilityLabel={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              <MaterialCommunityIcons name={mode === "dark" ? "weather-sunny" : "weather-night"} size={20} color={colors.text} />
+            </Pressable>
           </View>
         ) : null}
 
@@ -46,113 +59,121 @@ export function Screen(props: { children: React.ReactNode; style?: ViewStyle; sh
   );
 }
 
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: Colors.bg,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.bg,
-    overflow: "hidden",
-  },
-  blobOne: {
-    position: "absolute",
-    top: -80,
-    right: -80,
-    width: 220,
-    height: 220,
-    borderRadius: 110,
-    backgroundColor: "rgba(255, 122, 51, 0.16)",
-  },
-  blobTwo: {
-    position: "absolute",
-    top: 110,
-    left: -90,
-    width: 190,
-    height: 190,
-    borderRadius: 95,
-    backgroundColor: "rgba(255, 193, 138, 0.22)",
-  },
-  topBar: {
-    paddingHorizontal: 18,
-    paddingTop: 12,
-    paddingBottom: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  iconButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 16,
-    backgroundColor: Colors.card,
-    borderWidth: 1,
-    borderColor: Colors.line,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#C76A36",
-    shadowOpacity: 0.12,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 2,
-  },
-  iconText: {
-    color: Colors.text,
-    fontSize: 20,
-    fontWeight: "900",
-  },
-  brandWrap: {
-    flex: 1,
-    paddingHorizontal: 12,
-  },
-  brand: {
-    color: Colors.text,
-    fontSize: 17,
-    fontWeight: "900",
-  },
-  brandSub: {
-    color: Colors.muted,
-    fontSize: 12,
-    marginTop: 1,
-  },
-  cartButton: {
-    minWidth: 86,
-    height: 44,
-    paddingHorizontal: 14,
-    borderRadius: 16,
-    backgroundColor: Colors.brand,
-    borderWidth: 1,
-    borderColor: Colors.brand,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    shadowColor: Colors.brand,
-    shadowOpacity: 0.25,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 4,
-  },
-  cartText: {
-    color: "#FFF7F1",
-    fontWeight: "800",
-  },
-  badge: {
-    minWidth: 20,
-    height: 20,
-    borderRadius: 999,
-    backgroundColor: "#FFF7F1",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 4,
-  },
-  badgeText: {
-    color: Colors.brand,
-    fontSize: 11,
-    fontWeight: "900",
-  },
-  content: {
-    flex: 1,
-  },
-});
+function createStyles(colors: ReturnType<typeof useTheme>["colors"]) {
+  return StyleSheet.create({
+    safe: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    container: {
+      flex: 1,
+      backgroundColor: colors.bg,
+      overflow: "hidden",
+    },
+    blobOne: {
+      position: "absolute",
+      top: -80,
+      right: -80,
+      width: 220,
+      height: 220,
+      borderRadius: 110,
+      backgroundColor: colors.brand3 + "26",
+    },
+    blobTwo: {
+      position: "absolute",
+      top: 110,
+      left: -90,
+      width: 190,
+      height: 190,
+      borderRadius: 95,
+      backgroundColor: colors.brand3 + "33",
+    },
+    topBar: {
+      paddingHorizontal: 18,
+      paddingTop: 12,
+      paddingBottom: 14,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    iconButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 16,
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      borderColor: colors.line,
+      alignItems: "center",
+      justifyContent: "center",
+      shadowColor: colors.shadow,
+      shadowOpacity: 0.12,
+      shadowRadius: 10,
+      shadowOffset: { width: 0, height: 6 },
+      elevation: 2,
+    },
+    brandWrap: {
+      flex: 1,
+      paddingHorizontal: 12,
+    },
+    brand: {
+      color: colors.text,
+      fontSize: 17,
+      fontWeight: "900",
+    },
+    brandSub: {
+      color: colors.muted,
+      fontSize: 12,
+      marginTop: 1,
+    },
+    cartButton: {
+      minWidth: 86,
+      height: 44,
+      paddingHorizontal: 14,
+      borderRadius: 16,
+      backgroundColor: colors.brand,
+      borderWidth: 1,
+      borderColor: colors.brand,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      shadowColor: colors.brand,
+      shadowOpacity: 0.25,
+      shadowRadius: 14,
+      shadowOffset: { width: 0, height: 8 },
+      elevation: 4,
+    },
+    cartText: {
+      color: colors.textOnBrand,
+      fontWeight: "800",
+    },
+    badge: {
+      minWidth: 20,
+      height: 20,
+      borderRadius: 999,
+      backgroundColor: colors.textOnBrand,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingHorizontal: 4,
+    },
+    badgeText: {
+      color: colors.brand,
+      fontSize: 11,
+      fontWeight: "900",
+    },
+    themeButton: {
+      marginLeft: 10,
+      width: 44,
+      height: 44,
+      borderRadius: 16,
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.line,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    content: {
+      flex: 1,
+    },
+  });
+}

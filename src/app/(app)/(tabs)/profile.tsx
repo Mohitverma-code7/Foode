@@ -1,12 +1,14 @@
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { Screen } from "@/components/Screen";
-import { Colors } from "@/theme/colors";
+import { useTheme } from "@/state/themeStore";
 import { useRouter } from "expo-router";
-import React from "react";
-import { Pressable, StyleSheet, Text, View , ScrollView} from "react-native";
+import React, { useMemo } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function ProfileTab() {
   const router = useRouter();
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
     <Screen>
@@ -50,64 +52,61 @@ export default function ProfileTab() {
           <Text style={styles.footerTitle}>Need help?</Text>
           <Text style={styles.footerBody}>Use the drawer menu to jump to help, settings, and your order history.</Text>
           <PrimaryButton title="Open Help" onPress={() => router.push("/(app)/(drawer)/help")} style={{ marginTop: 14 }} />
-          <PrimaryButton
-            title="Back to Home"
-            onPress={() => router.replace("/(app)/(tabs)/home")}
-            variant="secondary"
-            style={{ marginTop: 12 }}
-          />
+          <PrimaryButton title="Back to Home" onPress={() => router.replace("/(app)/(tabs)/home")} variant="secondary" style={{ marginTop: 12 }} />
         </View>
       </ScrollView>
     </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: { paddingHorizontal: 18, paddingTop: 8 },
-  hero: { gap: 6 },
-  title: { color: Colors.text, fontSize: 26, fontWeight: "900" },
-  meta: { color: Colors.muted, marginTop: 8, lineHeight: 18 },
-  card: {
-    marginTop: 16,
-    backgroundColor: Colors.card,
-    borderRadius: 22,
-    padding: 18,
-    borderWidth: 1,
-    borderColor: Colors.line,
-  },
-  cardTitle: { color: Colors.text, fontWeight: "900" },
-  cardBody: { color: Colors.muted, marginTop: 6 },
-  statRow: { flexDirection: "row", gap: 10, marginTop: 16 },
-  stat: {
-    flex: 1,
-    padding: 12,
-    borderRadius: 16,
-    backgroundColor: Colors.cardStrong,
-    borderWidth: 1,
-    borderColor: Colors.line,
-  },
-  statValue: { color: Colors.text, fontSize: 18, fontWeight: "900" },
-  statLabel: { color: Colors.muted, fontSize: 12, marginTop: 4 },
-  linkGrid: { flexDirection: "row", gap: 12, marginTop: 16 },
-  linkCard: {
-    flex: 1,
-    borderRadius: 18,
-    padding: 16,
-    backgroundColor: Colors.cardStrong,
-    borderWidth: 1,
-    borderColor: Colors.line,
-  },
-  linkTitle: { color: Colors.text, fontWeight: "900" },
-  linkMeta: { color: Colors.muted, marginTop: 6, lineHeight: 18, fontSize: 12 },
-  footerCard: {
-    marginTop: 18,
-    padding: 18,
-    borderRadius: 22,
-    backgroundColor: Colors.card,
-    borderWidth: 1,
-    marginBottom: 18,
-    borderColor: Colors.line,
-  },
-  footerTitle: { color: Colors.text, fontWeight: "900", fontSize: 16 },
-  footerBody: { color: Colors.muted, marginTop: 8, lineHeight: 20 },
-});
+function createStyles(colors: ReturnType<typeof useTheme>["colors"]) {
+  return StyleSheet.create({
+    wrap: { paddingHorizontal: 18, paddingTop: 8 },
+    hero: { gap: 6 },
+    title: { color: colors.text, fontSize: 26, fontWeight: "900" },
+    meta: { color: colors.muted, marginTop: 8, lineHeight: 18 },
+    card: {
+      marginTop: 16,
+      backgroundColor: colors.card,
+      borderRadius: 22,
+      padding: 18,
+      borderWidth: 1,
+      borderColor: colors.line,
+    },
+    cardTitle: { color: colors.text, fontWeight: "900" },
+    cardBody: { color: colors.muted, marginTop: 6 },
+    statRow: { flexDirection: "row", gap: 10, marginTop: 16 },
+    stat: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 16,
+      backgroundColor: colors.surfaceSoft,
+      borderWidth: 1,
+      borderColor: colors.line,
+    },
+    statValue: { color: colors.text, fontSize: 18, fontWeight: "900" },
+    statLabel: { color: colors.muted, fontSize: 12, marginTop: 4 },
+    linkGrid: { flexDirection: "row", gap: 12, marginTop: 16 },
+    linkCard: {
+      flex: 1,
+      borderRadius: 18,
+      padding: 16,
+      backgroundColor: colors.surfaceSoft,
+      borderWidth: 1,
+      borderColor: colors.line,
+    },
+    linkTitle: { color: colors.text, fontWeight: "900" },
+    linkMeta: { color: colors.muted, marginTop: 6, lineHeight: 18, fontSize: 12 },
+    footerCard: {
+      marginTop: 18,
+      padding: 18,
+      borderRadius: 22,
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      marginBottom: 18,
+      borderColor: colors.line,
+    },
+    footerTitle: { color: colors.text, fontWeight: "900", fontSize: 16 },
+    footerBody: { color: colors.muted, marginTop: 8, lineHeight: 20 },
+  });
+}

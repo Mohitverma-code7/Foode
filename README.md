@@ -2,6 +2,10 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Video link
+
+   Link = [ https://youtube.com/shorts/7VAMCfvxBAE?si=I4mvGnZxrqTpI0nZ ]
+
 ## Get started
 
 1. Install dependencies

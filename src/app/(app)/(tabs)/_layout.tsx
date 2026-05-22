@@ -1,6 +1,6 @@
 import { TabIcon } from "@/components/TabIcon";
 import { useCartCount } from "@/hooks/useCartCount";
-import { Colors } from "@/theme/colors";
+import { useTheme } from "@/state/themeStore";
 import { Tabs } from "expo-router";
 import React from "react";
 
@@ -10,26 +10,27 @@ const profileIcon = require("../../../../assets/images/tabIcons/home.png");
 
 export default function TabsLayout() {
   const cartCount = useCartCount();
+  const { colors } = useTheme();
 
   return (
-    <Tabs
+      <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#FFF8F2",
-          borderTopColor: Colors.line,
+          backgroundColor: colors.surface,
+          borderTopColor: colors.line,
           borderTopWidth: 1,
           height: 72,
           paddingBottom: 12,
           paddingTop: 8,
-          shadowColor: "#D88952",
+          shadowColor: colors.shadow,
           shadowOpacity: 0.12,
           shadowRadius: 18,
           shadowOffset: { width: 0, height: -4 },
           elevation: 8,
         },
-        tabBarActiveTintColor: Colors.brand,
-        tabBarInactiveTintColor: "rgba(31,24,19,0.55)",
+        tabBarActiveTintColor: colors.brand,
+        tabBarInactiveTintColor: colors.muted,
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: "700",
@@ -60,8 +61,8 @@ export default function TabsLayout() {
           tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={exploreIcon} />,
           tabBarBadge: cartCount > 0 ? String(cartCount) : undefined,
           tabBarBadgeStyle: {
-            backgroundColor: Colors.brand,
-            color: "#FFF7F1",
+            backgroundColor: colors.brand,
+            color: colors.textOnBrand,
             borderRadius: 12,
           },
         }}

@@ -1,5 +1,5 @@
-import { Colors } from "@/theme/colors";
-import React from "react";
+import { useTheme } from "@/state/themeStore";
+import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, ViewStyle } from "react-native";
 
 export function PrimaryButton(props: {
@@ -10,10 +10,12 @@ export function PrimaryButton(props: {
   disabled?: boolean;
 }) {
   const variant = props.variant ?? "primary";
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
-  const bg = variant === "primary" ? Colors.brand : "#FFF";
-  const borderColor = variant === "primary" ? Colors.brand : Colors.line;
-  const textColor = variant === "primary" ? "#FFF7F1" : Colors.text;
+  const bg = variant === "primary" ? colors.brand : colors.surface;
+  const borderColor = variant === "primary" ? colors.brand : colors.line;
+  const textColor = variant === "primary" ? colors.textOnBrand : colors.text;
 
   return (
     <Pressable
@@ -35,23 +37,25 @@ export function PrimaryButton(props: {
   );
 }
 
-const styles = StyleSheet.create({
-  base: {
-    height: 52,
-    borderRadius: 18,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 16,
-    shadowColor: "#C86B37",
-    shadowOpacity: 0.18,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 4,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: "800",
-    letterSpacing: 0.2,
-  },
-});
+function createStyles(colors: ReturnType<typeof useTheme>["colors"]) {
+  return StyleSheet.create({
+    base: {
+      height: 52,
+      borderRadius: 18,
+      borderWidth: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingHorizontal: 16,
+      shadowColor: colors.shadow,
+      shadowOpacity: 0.18,
+      shadowRadius: 16,
+      shadowOffset: { width: 0, height: 10 },
+      elevation: 4,
+    },
+    text: {
+      fontSize: 16,
+      fontWeight: "800",
+      letterSpacing: 0.2,
+    },
+  });
+}
